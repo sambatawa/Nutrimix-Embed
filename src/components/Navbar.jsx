@@ -41,7 +41,7 @@ export function Navbar() {
               { name: 'Beranda', href: '#hero' },
               { name: 'Produk', href: '#products' },
               { name: 'FAQ', href: '#faq' },
-              { name: 'Tentang', href: '#about' }
+              { name: 'Tim', href: '#members' }
             ].map((item, index) => (
               <motion.a
                 key={item.name}
@@ -78,7 +78,7 @@ export function Navbar() {
             <motion.button 
               whileHover={{ scale: 1.15, y: -3 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => window.location.href = '/?login=true'}
+              onClick={() => window.location.href = '/login'}
               className="text-gray-600 hover:text-gray-900 transition-all duration-300 p-2 rounded-full hover:bg-gray-100"
             >
               <User className="w-5 h-5" />
@@ -124,7 +124,7 @@ export function Navbar() {
                 { name: 'Beranda', href: '#hero' },
                 { name: 'Produk', href: '#products' },
                 { name: 'FAQ', href: '#faq' },
-                { name: 'Tentang', href: '#about' }
+                { name: 'Tim', href: '#members' }
               ].map((item, index) => (
                 <motion.a
                   key={item.name}

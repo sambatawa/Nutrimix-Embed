@@ -133,7 +133,7 @@ const Progress = () => {
                   'div',
                   {
                     className: `absolute -top-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg ${
-                      isEven ? 'md:-left-6' : 'md:right-[calc(55%-3rem)]'
+                      isEven ? 'md:-left-6' : 'md:-right-6'
                     } bg-gradient-to-br ${step.theme} backdrop-blur-md`
                   },
                   React.createElement(Icon, {

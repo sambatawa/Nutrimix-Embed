@@ -5,40 +5,41 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Mail, Linkedin, Twitter, Github } from 'lucide-react';
 
 const teamMembers = [
-  { id: 1, name: 'Christiano Nicoma Boseke', role: 'Leader Project', image: 'https://drive.google.com/uc?export=view&id=1xemzkQDsE1QZIqe7s5JjQ69C1elpAw1A', email: 'sarah@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 2, name: 'Genta Fallah Munggaran Sonagar', role: 'Lead Developer', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', email: 'michael@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 3, name: 'Irfan Rifqy Widya Syahbani', role: 'Lead Mechanical', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'emily@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 4, name: 'Dio Aranda', role: 'Lead Technical', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', email: 'david@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 5, name: 'Muhammad Aqil Ramadhani', role: 'Lead Designer', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'jessica@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 6, name: 'Muhammad Rafi Riza Pratama', role: 'Lead Documenter', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', email: 'robert@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 7, name: 'Inas Samara Taqia', role: 'Developer', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'amanda@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 8, name: 'Achlis Muhammad Yusuf', role: 'Developer', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', email: 'james@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 9, name: 'Fauzi Luqman Noor Ikhwan', role: 'Developer', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'sophie@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 10, name: 'Yehezkiel Junifer Reyno Oppier', role: 'Developer', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', email: 'daniel@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 11, name: 'Muhammad Rakha Buana', role: 'Mechanical', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'olivia@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 12, name: 'Muhammad Dzaky Azzshahir', role: 'Mechanical', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', email: 'william@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 13, name: 'Daffa Ardyana Eka Putra', role: 'Mechanical', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'isabella@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 14, name: 'Arya Kusuma Pratama', role: 'Mechanical', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', email: 'alexander@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 15, name: 'Ariel Pasha Ramaditya', role: 'Mechanical', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'mia@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 16, name: 'Sarah Aninditya', role: 'Technical', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', email: 'ethan@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 17, name: 'Raden Tuhibagus Ahmad K. S', role: 'Technical', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'charlotte@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 18, name: 'Della Arviyanti', role: 'Technical', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', email: 'benjamin@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 19, name: 'Laras Desfyanti', role: 'Technical', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'amelia@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 20, name: 'Adinda Octhavia Indriyani', role: 'Designer', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', email: 'lucas@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 21, name: 'Uzma Kratos Bijaksana', role: 'Designer', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'harper@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 22, name: 'Muhammad Rifqi Annaufal', role: 'Documenter', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', email: 'henry@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 23, name: 'Michael Christian Handoko', role: 'Documenter', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'evelyn@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 24, name: 'Selpi Anjeli ', role: 'Documenter', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', email: 'sebastian@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 25, name: 'Fadila Azahra', role: 'Documenter', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80', email: 'abigail@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 26, name: 'Mikhail Hibrizi', role: 'Documenter', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', email: 'jack@company.com', linkedin: '#', twitter: '#', github: '#' },
-  { id: 27, name: 'M Qyblat Ilmy Mahdi', role: 'Documenter', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', email: 'emilyc@company.com', linkedin: '#', twitter: '#', github: '#' }
+  { id: 1, name: 'Christiano Nicoma Boseke', role: 'Leader Project', image: '/1.png', email: 'sarah@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 2, name: 'Genta Fallah Munggaran Sonagar', role: 'Lead Developer', image: '/2.png', email: 'michael@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 3, name: 'Irfan Rifqy Widya Syahbani', role: 'Lead Mechanical', image: '/3.png', email: 'emily@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 4, name: 'Dio Aranda', role: 'Lead Technical', image: '/1.png', email: 'david@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 5, name: 'Muhammad Aqil Ramadhani', role: 'Lead Designer', image: '/2.png', email: 'jessica@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 6, name: 'Muhammad Rafi Riza Pratama', role: 'Lead Documenter', image: '/3.png', email: 'robert@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 7, name: 'Inas Samara Taqia', role: 'Developer', image: '/1.png', email: 'amanda@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 8, name: 'Achlis Muhammad Yusuf', role: 'Developer', image: '/2.png', email: 'james@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 9, name: 'Fauzi Luqman Noor Ikhwan', role: 'Developer', image: '/3.png', email: 'sophie@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 10, name: 'Yehezkiel Junifer Reyno Oppier', role: 'Developer', image: '/1.png', email: 'daniel@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 11, name: 'Muhammad Rakha Buana', role: 'Mechanical', image: '/2.png', email: 'olivia@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 12, name: 'Muhammad Dzaky Azzshahir', role: 'Mechanical', image: '/3.png', email: 'william@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 13, name: 'Daffa Ardyana Eka Putra', role: 'Mechanical', image: '/1.png', email: 'isabella@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 14, name: 'Arya Kusuma Pratama', role: 'Mechanical', image: '/2.png', email: 'alexander@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 15, name: 'Ariel Pasha Ramaditya', role: 'Mechanical', image: '/3.png', email: 'mia@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 16, name: 'Sarah Aninditya', role: 'Technical', image: '/1.png', email: 'ethan@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 17, name: 'Raden Tuhibagus Ahmad K. S', role: 'Technical', image: '/2.png', email: 'charlotte@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 18, name: 'Della Arviyanti', role: 'Technical', image: '/3.png', email: 'benjamin@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 19, name: 'Laras Desfyanti', role: 'Technical', image: '/1.png', email: 'amelia@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 20, name: 'Adinda Octhavia Indriyani', role: 'Designer', image: '/2.png', email: 'lucas@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 21, name: 'Uzma Kratos Bijaksana', role: 'Designer', image: '/3.png', email: 'harper@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 22, name: 'Muhammad Rifqi Annaufal', role: 'Documenter', image: '/1.png', email: 'henry@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 23, name: 'Michael Christian Handoko', role: 'Documenter', image: '/2.png', email: 'evelyn@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 24, name: 'Selpi Anjeli ', role: 'Documenter', image: '/3.png', email: 'sebastian@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 25, name: 'Fadila Azahra', role: 'Documenter', image: '/1.png', email: 'abigail@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 26, name: 'Mikhail Hibrizi', role: 'Documenter', image: '/2.png', email: 'jack@company.com', linkedin: '#', twitter: '#', github: '#' },
+  { id: 27, name: 'M Qyblat Ilmy Mahdi', role: 'Documenter', image: '/3.png', email: 'emilyc@company.com', linkedin: '#', twitter: '#', github: '#' }
 ];
 
 export function Members() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const cardsPerPage = 3;
-  const maxIndex = Math.max(0, teamMembers.length - cardsPerPage);
+  const totalPages = Math.ceil(teamMembers.length / cardsPerPage);
+  const maxIndex = totalPages - 1;
 
   const nextSlide = () => {
     if (currentIndex < maxIndex) {
@@ -59,10 +60,13 @@ export function Members() {
     setCurrentIndex(index);
   };
 
-  const visibleMembers = teamMembers.slice(currentIndex, currentIndex + cardsPerPage);
+  const visibleMembers = teamMembers.slice(
+    currentIndex * cardsPerPage,
+    (currentIndex + 1) * cardsPerPage
+  );
 
   return (
-    <section className="py-20 px-6 bg-gray-50">
+    <section id="members" className="py-20 px-6 bg-gray-50">
       <div className="max-w-[1400px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -74,8 +78,7 @@ export function Members() {
           <motion.h2 
             className="text-gray-900 mb-4"
             style={{ fontSize: '3rem', lineHeight: '1.2', fontWeight: '500' }}
-          >
-            Meet Our Team
+          >Temui Tim Kami
           </motion.h2>
           <motion.p 
             className="text-gray-600 text-lg max-w-2xl mx-auto"
@@ -84,8 +87,8 @@ export function Members() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            Get to know the talented individuals who make our company great. 
-            We're a diverse team of 27 passionate professionals.
+            Kenali para individu berbakat yang membuat perusahaan kami hebat. 
+            Kami adalah tim yang beragam dari 27 profesional yang bersemangat.
           </motion.p>
         </motion.div>
 
@@ -107,62 +110,53 @@ export function Members() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
                     whileHover={{ y: -10, scale: 1.02 }}
-                    className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
+                    className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer"
                   >
-                    <div className="relative h-64 overflow-hidden">
+                    <div className="relative h-80 overflow-hidden">
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute bottom-4 left-4 right-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="absolute inset-0 bg-linaer-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 className="text-white text-xl font-semibold mb-2">{member.name}</h3>
+                        <p className="text-white/90 text-sm mb-4">{member.role}</p>
                         <div className="flex gap-2">
                           <motion.a
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             href={member.email}
-                            className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                            className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                           >
-                            <Mail className="w-4 h-4 text-gray-700" />
+                            <Mail className="w-4 h-4 text-white" />
                           </motion.a>
                           <motion.a
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             href={member.linkedin}
-                            className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                            className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                           >
-                            <Linkedin className="w-4 h-4 text-gray-700" />
+                            <Linkedin className="w-4 h-4 text-white" />
                           </motion.a>
                           <motion.a
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             href={member.twitter}
-                            className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                            className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                           >
-                            <Twitter className="w-4 h-4 text-gray-700" />
+                            <Twitter className="w-4 h-4 text-white" />
                           </motion.a>
                           <motion.a
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             href={member.github}
-                            className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                            className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                           >
-                            <Github className="w-4 h-4 text-gray-700" />
+                            <Github className="w-4 h-4 text-white" />
                           </motion.a>
                         </div>
                       </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                      <p className="text-gray-600 mb-4">{member.role}</p>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: '100%' }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5, duration: 0.8 }}
-                        className="h-1 bg-linear-to-r from-[#D4A574] to-[#C17A4F] rounded-full"
-                      />
                     </div>
                   </motion.div>
                 ))}
@@ -209,7 +203,6 @@ export function Members() {
           ))}
         </div>
 
-        {/* Team Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -227,7 +220,7 @@ export function Members() {
             >
               27
             </motion.div>
-            <p className="text-gray-600">Team Members</p>
+            <p className="text-gray-600">Anggota Tim</p>
           </div>
           <div className="text-center">
             <motion.div
@@ -237,9 +230,9 @@ export function Members() {
               transition={{ delay: 0.7, type: "spring" }}
               className="text-4xl font-bold text-gray-900 mb-2"
             >
-              15+
+              1
             </motion.div>
-            <p className="text-gray-600">Departments</p>
+            <p className="text-gray-600">Departemen</p>
           </div>
           <div className="text-center">
             <motion.div
@@ -249,9 +242,9 @@ export function Members() {
               transition={{ delay: 0.8, type: "spring" }}
               className="text-4xl font-bold text-gray-900 mb-2"
             >
-              50+
+              30+
             </motion.div>
-            <p className="text-gray-600">Projects Completed</p>
+            <p className="text-gray-600">Proyek Selesai</p>
           </div>
           <div className="text-center">
             <motion.div

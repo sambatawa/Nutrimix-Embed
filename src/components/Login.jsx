@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Chrome, Github, Apple, Home } from 'lucide-react';
@@ -8,6 +10,16 @@ export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  
+  const images = ['/2.png', '/1.png', '/3.png'];
+  
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,23 +28,19 @@ export function LoginPage() {
       setIsLoading(false);
       console.log('Login:', { email, password });
       alert('Login berhasil!');
-      window.location.href = '/';
+      window.location.href = '/register';
     }, 2000);
   };
 
-  const socialLogins = [
-    { name: 'Google', icon: Chrome, color: 'from-red-500 to-yellow-500' },
-    { name: 'GitHub', icon: Github, color: 'from-gray-700 to-gray-900' },
-  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center p-4 relative overflow-hidden">
       <motion.button
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.1 }}
         onClick={() => window.location.href = '/'}
-        className="absolute top-8 left-8 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-10"
+        className="fixed top-2 left-2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-9999 border-2 border-white/50"
       >
         <Home className="w-5 h-5 text-gray-700" />
       </motion.button>
@@ -46,7 +54,7 @@ export function LoginPage() {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#D4A574]/30 to-[#C17A4F]/30 rounded-full blur-3xl"
+        className="absolute top-0 left-0 w-96 h-96 bg-linear-to-br from-[#D4A574]/30 to-[#C17A4F]/30 rounded-full blur-3xl"
       />
       <motion.div
         animate={{
@@ -58,15 +66,15 @@ export function LoginPage() {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#C17A4F]/30 to-[#D4A574]/30 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-96 h-96 bg-linear-to-br from-[#C17A4F]/30 to-[#D4A574]/30 rounded-full blur-3xl"
       />
 
-      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 relative z-10">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-1000">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="hidden lg:flex flex-col justify-center items-center p-12 bg-white/40 backdrop-blur-xl rounded-3xl border border-white/50 shadow-2xl"
+          className="flex flex-col justify-center items-center p-12 rounded-3xl relative overflow-hidden"
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -75,31 +83,43 @@ export function LoginPage() {
             className="w-full"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-linear-to-br from-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl" />
+              <div className="absolute inset-0 bg-linear-to-br from-[#C17A4F]/20 to-[#D4A574]/20 rounded-3xl blur-2xl" />
+              <div className="absolute inset-0 opacity-20">
+                <div className="w-full h-full bg-repeat" style={{ backgroundImage: "url('/1.png')", backgroundSize: "100px", backgroundPosition: "center", filter: "blur(2px)" }} />
+              </div>
               <img
-                src="https://images.unsplash.com/photo-1618044733300-9472054094ee?w=800&q=80"
+                src="/2.png"
                 alt="Workspace"
-                className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover"
+                className="relative rounded-3xl shadow-lg w-full h-[500px] object-cover"
+              />
+              <motion.img
+                src="/3.png"
+                alt="Ikan"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.6, duration: 0.8, type: "spring" }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="absolute -bottom-4 -right-4 w-24 h-24 object-cover drop-shadow-lg rounded-xl"
+              />
+              <motion.img
+                src="/1.png"
+                alt="Ikan"
+                initial={{ scale: 0, rotate: 180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.8, duration: 0.8, type: "spring" }}
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                className="absolute -top-4 -left-4 w-20 h-20 object-cover drop-shadow-lg rounded-xl"
               />
             </div>
           </motion.div>
           
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-8 text-center"
-          >
-            <h2 className="text-gray-800 mb-3">Welcome Back!</h2>
-            <p className="text-gray-600">Login to continue your journey with us</p>
-          </motion.div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col justify-center p-8 md:p-12 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/50 shadow-2xl"
+          className="flex flex-col justify-center p-8 md:p-12 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/50 shadow-lg"
         >
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -110,34 +130,6 @@ export function LoginPage() {
             <p className="text-gray-600 mb-8">Masukkan kredensial Anda untuk mengakses akun</p>
           </motion.div>
 
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 gap-3 mb-8"
-          >
-            {socialLogins.map((social, index) => (
-              <motion.button
-                key={social.name}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all group"
-              >
-                <social.icon className="w-5 h-5 mx-auto text-gray-600 group-hover:text-gray-900 transition-colors" />
-              </motion.button>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="flex-1 h-px bg-gray-300" />
-            <span className="text-gray-500 text-sm">OR</span>
-            <div className="flex-1 h-px bg-gray-300" />
-          </motion.div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <motion.div
@@ -200,7 +192,7 @@ export function LoginPage() {
                   type="checkbox"
                   className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
                 />
-                <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Remember me</span>
+                <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Ingat saya!</span>
               </label>
               <motion.a
                 whileHover={{ x: 3 }}
@@ -219,7 +211,7 @@ export function LoginPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F] text-white py-3 rounded-xl hover:from-[#C17A4F] hover:to-[#B8734A] transition-all shadow-lg group flex items-center justify-center gap-2 disabled:opacity-70"
+              className="w-full bg-linear-to-r from-[#D4A574] to-[#C17A4F] text-white py-3 rounded-xl hover:from-[#C17A4F] hover:to-[#B8734A] transition-all shadow-lg group flex items-center justify-center gap-2 disabled:opacity-70"
             >
               {isLoading ? (
                 <motion.div
@@ -245,7 +237,7 @@ export function LoginPage() {
             Belum punya akun?{' '}
             <motion.a
               whileHover={{ scale: 1.05 }}
-              href="/?register=true"
+              href="/register"
               className="text-[#D4A574] hover:text-[#C17A4F] inline-block"
             >
               Daftar

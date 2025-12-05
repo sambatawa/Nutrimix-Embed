@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export function About() {
   return (
-    <section id="about" className="py-20 px-6 bg-gradient-to-br from-[#F5E6D3] via-[#F0DCC8] to-[#E8D4C0]">
+    <section id="about" className="py-20 px-6 bg-linear-to-br from-[#F5E6D3] via-[#F0DCC8] to-[#E8D4C0]">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
