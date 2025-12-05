@@ -143,23 +143,28 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-linear-to-br from-[#F5E6D3]/20 via-[#F0DCC8]/20 to-[#E8D4C0]/20 backdrop-blur-md z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/40 backdrop-blur-xl z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="backdrop-blur-xl bg-white/80 rounded-[32px] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/30"
+          className="bg-linear-to-br from-white/90 via-white/80 to-white/70 backdrop-blur-2xl rounded-[32px] max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/30 md:max-h-[90vh] md:overflow-hidden overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-white/30 px-6 py-4 flex items-center justify-between rounded-t-[32px]">
-            <h2 className="text-2xl font-bold text-gray-900">Detail Produk</h2>
+          <div className="sticky top-0 bg-linear-to-r from-white/95 to-white/90 backdrop-blur-xl border-b border-white/20 px-6 py-4 flex items-center justify-between rounded-t-[32px] shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-linear-to-br from-[#D4A574] to-[#C17A4F] rounded-xl flex items-center justify-center">
+                <Package className="w-4 h-4 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Detail Produk</h2>
+            </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-white/50 rounded-full transition-all duration-200 group"
             >
-              <X className="w-5 h-5 text-gray-500" />
+              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
             </button>
           </div>
 
@@ -225,23 +230,28 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
                 </div>
                 <div className="flex gap-3 pt-4">
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleWhatsApp}
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#128C7E] hover:to-[#075E54] text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl border border-white/20"
                   >
-                    <Phone className="w-4 h-4" />
-                    Hubungi
+                    <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                      <Phone className="w-3 h-3" />
+                    </div>
+                    <span>Hubungi WhatsApp</span>
                   </motion.button>
                   
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowCustomerForm(true)}
                     disabled={isProcessing}
-                    className="flex-1 bg-[#D4A574] hover:bg-[#C19A6B] disabled:bg-gray-300 text-white px-6 py-3 rounded-xl font-medium transition-colors"
+                    className="flex-1 bg-linear-to-r from-[#D4A574] via-[#C17A4F] to-[#B8734A] hover:from-[#C17A4F] hover:via-[#B8734A] hover:to-[#9B6540] disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl border border-white/20 disabled:shadow-none"
                   >
-                    {isProcessing ? 'Memproses...' : 'Bayar Sekarang'}
+                    <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                      <ShoppingBag className="w-3 h-3" />
+                    </div>
+                    <span>{isProcessing ? 'Memproses...' : 'Bayar Sekarang'}</span>
                   </motion.button>
                 </div>
               </div>
