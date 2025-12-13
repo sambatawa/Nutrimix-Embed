@@ -60,7 +60,7 @@ export function RegisterPage() {
     
     const validDeviceCodes = ['Nutrimix1', 'Nutrimix2', 'Nutrimix3'];
     if (!validDeviceCodes.includes(referralCode)) {
-      alert('Kode unik tidak valid! Gunakan kode dari alat: Nutrimix1, Nutrimix2, atau Nutrimix3');
+      alert('Kode unik tidak valid! Cek kode di alatmu kembali');
       return;
     }
     
@@ -189,9 +189,9 @@ export function RegisterPage() {
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.1 }}
         onClick={() => window.location.href = '/'}
-        className="absolute top-8 left-8 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-10"
+        className="fixed top-5 left-4 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-9999 border-2 border-white/50"
       >
-        <Home className="w-5 h-5 text-gray-700" />
+        <Home className="w-5 h-5 text-[#C17A4F]" />
       </motion.button>
       <motion.div
         animate={{
@@ -345,7 +345,7 @@ export function RegisterPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-gray-900 mb-2 font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-3xl">Daftar</h1>
+            <h1 className=" font-bold mb-2 bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-3xl">Daftar</h1>
             <p className="text-gray-700 mb-8 font-medium drop-shadow-sm">Buat akun baru untuk mengakses semua fitur premium</p>
           </motion.div>
 

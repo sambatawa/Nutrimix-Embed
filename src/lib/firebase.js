@@ -16,8 +16,6 @@ const db = getDatabase(app);
 
 export { app, db };
 
-// Realtime Database functions
-
 export const generateReferralCode = (name) => {
   const cleanName = name.toUpperCase().replace(/\s+/g, '').substring(0, 5);
   const year = new Date().getFullYear();

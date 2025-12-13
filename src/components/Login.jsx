@@ -40,9 +40,9 @@ export function LoginPage() {
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.1 }}
         onClick={() => window.location.href = '/'}
-        className="fixed top-2 left-2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-9999 border-2 border-white/50"
+        className="fixed top-5 left-4 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all z-9999 border-2 border-white/50"
       >
-        <Home className="w-5 h-5 text-gray-700" />
+        <Home className="w-5 h-5 text-[#C17A4F]" />
       </motion.button>
       <motion.div
         animate={{
@@ -126,7 +126,7 @@ export function LoginPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-gray-900 mb-2">Masuk</h1>
+            <h1 className="font-bold text-3xl bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text mb-2">Masuk</h1>
             <p className="text-gray-600 mb-8">Masukkan kredensial Anda untuk mengakses akun</p>
           </motion.div>
 

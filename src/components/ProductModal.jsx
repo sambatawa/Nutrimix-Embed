@@ -1,11 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, Mail, MapPin, Package, ShoppingBag, CheckCircle } from 'lucide-react';
+import { X, Phone, Mail, MapPin, Package, ShoppingBag, CheckCircle, ShoppingCart } from 'lucide-react';
 
 export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCustomerForm, setShowCustomerForm] = useState(false);
+  const [showCartNotification, setShowCartNotification] = useState(false);
   const [customerData, setCustomerData] = useState({
     firstName: '',
     lastName: '',
@@ -51,6 +52,31 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
+  const handleAddToCart = () => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    const existingProductIndex = existingCart.findIndex(item => item.id === 'NUTRIMIX-PRO');
+    
+    if (existingProductIndex !== -1) {
+      existingCart[existingProductIndex].quantity += 1;
+    } else {
+      existingCart.push({
+        id: 'NUTRIMIX-PRO',
+        name: product.name,
+        price: 2000000,
+        displayPrice: product.price,
+        image: product.image,
+        quantity: 1
+      });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    setShowCartNotification(true);
+      setTimeout(() => {
+      setShowCartNotification(false);
+    }, 3000);
+  };
+
   const validateCustomerForm = () => {
     const errors = {};
     if (!customerData.firstName) errors.firstName = 'Nama depan wajib diisi';
@@ -91,7 +117,6 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
         throw new Error(result.error || 'Payment processing failed');
       }
       
-      // Open Midtrans Snap payment popup
       if (window.snap) {
         window.snap.pay(result.snapToken, {
           onSuccess: window.snapCallback.onSuccess,
@@ -117,12 +142,10 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
     script.async = true;
     document.body.appendChild(script);
 
-    // Set global callback for Midtrans
     window.snapCallback = {
       onSuccess: function(result) {
         console.log('Payment success:', result);
         setIsProcessing(false);
-        // You can redirect to success page or show success modal
         alert('Pembayaran berhasil! Terima kasih atas pesanan Anda.');
         onClose();
       },
@@ -165,13 +188,12 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-linear-to-br from-white/90 via-white/80 to-white/70 backdrop-blur-2xl rounded-[32px] max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/30 md:max-h-[90vh] md:overflow-hidden overflow-y-auto"
+          className="bg-linear-to-br from-white/90 via-white/80 to-white/70 backdrop-blur-2xl rounded-t-[50px] max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/30 md:max-h-[90vh] md:overflow-hidden overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="sticky top-0 bg-linear-to-r from-white/95 to-white/90 backdrop-blur-xl border-b border-white/20 px-6 py-4 flex items-center justify-between rounded-t-[32px] shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-linear-to-br from-[#D4A574] to-[#C17A4F] rounded-xl flex items-center justify-center">
-                <Package className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 bg-linear-to-br from-[#D4A574] to-[#C17A4F] rounded-full flex items-center justify-center">
               </div>
               <h2 className="text-2xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Detail Produk</h2>
             </div>
@@ -196,7 +218,7 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
                     }}
                   />
                 </div>
-                <div className="backdrop-blur-md bg-linear-to-r from-[#D4A574]/90 to-[#C19A6B]/90 text-white p-4 rounded-2xl border border-white/20">
+                <div className="backdrop-blur-md bg-linear-to-r from-[#D4A574]/90 to-[#C19A6B]/90 text-white p-4 rounded-2xl border border-white/50">
                   <p className="text-sm opacity-90">Harga</p>
                   <p className="text-3xl font-bold">{product.price}</p>
                 </div>
@@ -243,163 +265,63 @@ export const ProductModal = React.memo(function ProductModal({ isOpen, onClose }
                     ))}
                   </ol>
                 </div>
-                <div className="flex gap-3 pt-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleWhatsApp}
-                    className="flex-1 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#128C7E] hover:to-[#075E54] text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl border border-white/20"
-                  >
-                    <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
-                      <Phone className="w-3 h-3" />
+                <div className="pt-4">
+                  <div className="bg-white/30 rounded-full p-6 border border-white/20 shadow-xl">
+                    <div className="flex gap-3">
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleWhatsApp}
+                        className="flex-1 bg-linear-to-r from-[#C17A4F]/80 to-[#B8734A]/40 border-l-2 hover:from-[#B8734A]/90 hover:to-[#9B6540]/90 text-white px-2 py-4 rounded-l-full font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl group"
+                      >
+                        <div className="w-5 h-5 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                          <Phone className="w-3 h-3" />
+                        </div>
+                        <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-xs">Hubungi WhatsApp</span>
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleAddToCart}
+                        className="flex-1 bg-linear-to-r from-[#F59E0B]/80 to-[#D97706]/80 border rounded-full hover:from-[#D97706]/90 hover:to-[#B45309]/90 text-white px-2 py-4 font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl group"
+                      >
+                        <div className="w-5 h-5 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                          <ShoppingCart className="w-3 h-3" />
+                        </div>
+                        <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-xs">Keranjang</span>
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setShowCustomerForm(true)}
+                        disabled={isProcessing}
+                        className="flex-1 bg-linear-to-r from-[#D4A574]/40 to-[#C17A4F]/90 border-r-2 hover:from-[#C17A4F]/90 hover:to-[#B8734A]/90 text-white px-2 py-4 rounded-r-full font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl group"
+                      >
+                        <div className="w-5 h-5 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                          <ShoppingBag className="w-3 h-3" />
+                        </div>
+                        <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-xs">{isProcessing ? 'Memproses...' : 'Bayar Sekarang'}</span>
+                      </motion.button>
                     </div>
-                    <span>Hubungi WhatsApp</span>
-                  </motion.button>
-                  
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowCustomerForm(true)}
-                    disabled={isProcessing}
-                    className="flex-1 bg-linear-to-r from-[#D4A574] via-[#C17A4F] to-[#B8734A] hover:from-[#C17A4F] hover:via-[#B8734A] hover:to-[#9B6540] disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl border border-white/20 disabled:shadow-none"
-                  >
-                    <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
-                      <ShoppingBag className="w-3 h-3" />
-                    </div>
-                    <span>{isProcessing ? 'Memproses...' : 'Bayar Sekarang'}</span>
-                  </motion.button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Customer Form Modal */}
           <AnimatePresence>
-            {showCustomerForm && (
+            {showCartNotification && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-                onClick={() => setShowCustomerForm(false)}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                className="fixed bottom-8 right-8 bg-linear-to-r from-[#F59E0B] to-[#D97706] text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50"
               >
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.9, opacity: 0 }}
-                  className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold text-gray-900">Data Pembeli</h3>
-                    <button
-                      onClick={() => setShowCustomerForm(false)}
-                      className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                    >
-                      <X className="w-5 h-5 text-gray-500" />
-                    </button>
-                  </div>
-
-                  <form onSubmit={(e) => { e.preventDefault(); handlePayment(); }} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Nama Deppan *</label>
-                        <input
-                          type="text"
-                          value={customerData.firstName}
-                          onChange={(e) => setCustomerData(prev => ({ ...prev, firstName: e.target.value }))}
-                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent ${
-                            formErrors.firstName ? 'border-red-500' : 'border-gray-300'
-                          }`}
-                          placeholder="John"
-                        />
-                        {formErrors.firstName && <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>}
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Nama Belakang</label>
-                        <input
-                          type="text"
-                          value={customerData.lastName}
-                          onChange={(e) => setCustomerData(prev => ({ ...prev, lastName: e.target.value }))}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent"
-                          placeholder="Doe"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                      <input
-                        type="email"
-                        value={customerData.email}
-                        onChange={(e) => setCustomerData(prev => ({ ...prev, email: e.target.value }))}
-                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent ${
-                          formErrors.email ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                        placeholder="john@example.com"
-                      />
-                      {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon *</label>
-                      <input
-                        type="tel"
-                        value={customerData.phone}
-                        onChange={(e) => setCustomerData(prev => ({ ...prev, phone: e.target.value }))}
-                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent ${
-                          formErrors.phone ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                        placeholder="08123456789"
-                      />
-                      {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                      <textarea
-                        value={customerData.address}
-                        onChange={(e) => setCustomerData(prev => ({ ...prev, address: e.target.value }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent"
-                        rows={2}
-                        placeholder="Jl. Contoh No. 123, RT/RW 001/002"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Kota</label>
-                        <input
-                          type="text"
-                          value={customerData.city}
-                          onChange={(e) => setCustomerData(prev => ({ ...prev, city: e.target.value }))}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent"
-                          placeholder="Jakarta"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
-                        <input
-                          type="text"
-                          value={customerData.postalCode}
-                          onChange={(e) => setCustomerData(prev => ({ ...prev, postalCode: e.target.value }))}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4A574] focus:border-transparent"
-                          placeholder="12345"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="pt-4">
-                      <button
-                        type="submit"
-                        disabled={isProcessing}
-                        className="w-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F] text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isProcessing ? 'Memproses Pembayaran...' : `Bayar ${product.price}`}
-                      </button>
-                    </div>
-                  </form>
-                </motion.div>
+                <CheckCircle className="w-6 h-6" />
+                <div>
+                  <p className="font-semibold">Berhasil ditambahkan!</p>
+                  <p className="text-sm opacity-90">{product.name} telah ditambahkan ke keranjang</p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

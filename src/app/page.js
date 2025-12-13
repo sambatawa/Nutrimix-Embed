@@ -18,7 +18,12 @@ import CustomCursor from '../components/CustomCursor.jsx';
 import "./globals.css";
 
 export default function App() {
-  
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('register=true')) {
+      window.location.href = '/register';
+    }
+  }, []);
+
   return React.createElement(
     'div',
     {
