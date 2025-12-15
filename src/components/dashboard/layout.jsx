@@ -19,7 +19,6 @@ export default function DashboardLayout({ children }) {
     
     const checkAuth = () => {
       const authStatus = localStorage.getItem('isAuthenticated');
-      
       if (authStatus === 'true') {
         setIsAuthenticated(true);
       } else {
@@ -27,30 +26,23 @@ export default function DashboardLayout({ children }) {
       }
       setIsLoading(false);
     };
-
     checkAuth();
   }, [router, mounted]);
 
-  // Render loading state
-  const renderLoading = () => (
-    <div className="min-h-screen bg-linear-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4A574]"></div>
-    </div>
-  );
-
-  // Render unauthorized state
-  const renderUnauthorized = () => (
-    <div className="min-h-screen bg-linear-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4A574]"></div>
-    </div>
-  );
-
-  if (isLoading) {
-    return renderLoading();
+  if (!mounted || isLoading) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4A574]"></div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
-    return renderUnauthorized();
+    return (
+      <div className="min-h-screen bg-linear-to-br from-[#F5F0EB] via-[#F8F4EF] to-[#FAF6F1] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4A574]"></div>
+      </div>
+    );
   }
 
   return (

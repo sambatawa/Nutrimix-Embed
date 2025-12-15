@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, ShoppingCart, User, LogOut, Shield } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, User, LogOut, Shield, Package } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ref, get, db } from "@/lib/firebase";
@@ -15,6 +15,7 @@ export default function Sidebar() {
   const menu = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Keranjang", href: "/cart", icon: ShoppingCart },
+    { name: "Riwayat Pesanan", href: "/order", icon: Package },
     { name: "Pengaturan", href: "/pengaturan", icon: User },
   ];
 
@@ -112,7 +113,6 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Admin Menu Section */}
       {isAdmin && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

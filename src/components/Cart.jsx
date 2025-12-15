@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Minus, ShoppingBag, ShoppingCart, ArrowRight, Tag, Truck, Shield, Store, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { getCartItems, getAllProducts, updateCartItem, removeFromCart, addToCart } from '../lib/firebase';
 import DashboardHeader from './dashboard/DashboardHeader';
-import ModalProduct from './dashboard/modalProduct';
 import { auth, onAuthStateChanged } from '../lib/firebase';
 import { app, db, get, ref } from '../lib/firebase';
 
@@ -59,7 +58,6 @@ export function Cart() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [showProductModal, setShowProductModal] = useState(false);
   const [promoCode, setPromoCode] = useState('');
   const [isPromoApplied, setIsPromoApplied] = useState(false);
   const [discount, setDiscount] = useState(0);
@@ -71,7 +69,6 @@ export function Cart() {
   const [collapsedSellers, setCollapsedSellers] = useState([]);
   const [vouchers, setVouchers] = useState([]);
   const [shippingOptions, setShippingOptions] = useState({});
-  const [showOrderModal, setShowOrderModal] = useState(false);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -120,17 +117,6 @@ export function Cart() {
     fetchProducts();
   }, [cartItems]);
 
-  useEffect(() => {
-    if (showOrderModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [showOrderModal]);
 
   const groupedItems = cartItems.reduce((acc, item) => {
     const sellerId = 'default-seller';
@@ -319,10 +305,6 @@ export function Cart() {
     window.location.href = `/product/${productId}`;
   };
 
-  const handleAddToCartFromModal = (product) => {
-    addToCartFromRecommendations(product);
-    setShowProductModal(false);
-  };
 
   const selectedCartItems = cartItems.filter(item => selectedItems.includes(item.id));
   const subtotal = selectedCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -334,7 +316,7 @@ export function Cart() {
   return (
     <div>
       <DashboardHeader />
-      <div className="w-full p-4">
+      <div className="w-full p-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -342,7 +324,7 @@ export function Cart() {
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent">Keranjang Belanja</h1>
+            <h1 className="text-2xl font-bold bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent">Keranjang Belanja</h1>
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -472,7 +454,7 @@ export function Cart() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4"
           >
             <div className="bg-linear-to-r from-[#D4A574]/10 to-[#D4A574]/5 rounded-xl p-4 flex items-center gap-3 border border-[#D4A574]/20 shadow-sm">
               <Truck className="w-6 h-6 text-[#D4A574] shrink-0" />
@@ -504,7 +486,7 @@ export function Cart() {
           </motion.div>
         </div>
 
-        <div className={`lg:col-span-3 transition-all duration-300 ${showOrderModal ? 'blur-sm' : ''}`}>
+        <div className="lg:col-span-3">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -597,11 +579,11 @@ export function Cart() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setShowOrderModal(true)}
+                  onClick={() => window.location.href = '/order'}
                   disabled={selectedItems.length === 0}
                   className="w-full bg-linear-to-r from-[#D4A574] to-[#C17A4F] hover:from-[#C17A4F] hover:to-[#B87333] text-white px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <span>Lihat Detail ({selectedItems.length})</span>
+                  <span>Checkout ({selectedItems.length})</span>
                   <ArrowRight className="w-5 h-5" />
                 </motion.button>
               </div>
@@ -691,11 +673,11 @@ export function Cart() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setShowOrderModal(true)}
+                    onClick={() => window.location.href = '/order'}
                     disabled={selectedItems.length === 0}
                     className="bg-linear-to-r from-[#D4A574] to-[#C17A4F] hover:from-[#C17A4F] hover:to-[#B87333] text-white px-6 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <span>Lihat Detail ({selectedItems.length})</span>
+                    <span>Checkout ({selectedItems.length})</span>
                     <ArrowRight className="w-5 h-5" />
                   </motion.button>
                 </div>
@@ -704,120 +686,15 @@ export function Cart() {
           </motion.div>
         </div>
 
-        <AnimatePresence>
-          {showOrderModal && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
-              />
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-linear-to-br from-white via-[#FEF7F0] to-white rounded-3xl shadow-2xl border border-[#D4A574]/20 z-50 max-h-[90vh] overflow-y-auto"
-                style={{ backdropFilter: 'none', WebkitBackdropFilter: 'none' }}
-              >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900">Ringkasan Pesanan</h2>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setShowOrderModal(false)}
-                      className="text-gray-500 hover:text-[#D4A574] p-2 hover:bg-[#FEF7F0] rounded-xl transition-all duration-200 border border-transparent hover:border-[#D4A574]/20 flex items-center justify-center w-8 h-8"
-                    >
-                      <span className="text-xl font-bold leading-none">×</span>
-                    </motion.button>
-                  </div>
-
-                  <div className="space-y-3 mb-6 max-h-48 overflow-y-auto">
-                    {cartItems.filter(item => selectedItems.includes(item.id)).map(item => (
-                      <div key={item.id} className="flex items-center justify-between py-2 border-b border-gray-100">
-                        <div className="flex items-center gap-3">
-                          <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
-                          <div>
-                            <p className="font-medium text-sm">{item.name}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">Rp {(item.price * item.quantity).toLocaleString('id-ID')}</p>
-                          <p className="text-xs text-gray-500">{item.quantity}x</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-
-                  <div className="space-y-3 mb-6 pb-6 border-t border-gray-200">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span>Rp {subtotal.toLocaleString('id-ID')}</span>
-                    </div>
-                    {discount > 0 && (
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex justify-between text-green-600"
-                      >
-                        <span>Diskon ({discount}%)</span>
-                        <span>-Rp {discountAmount.toLocaleString('id-ID')}</span>
-                      </motion.div>
-                    )}
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Pengiriman</span>
-                      <span>{shipping === 0 ? 'GRATIS' : `Rp ${shipping.toLocaleString('id-ID')}`}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">PPN (11%)</span>
-                      <span>Rp {tax.toLocaleString('id-ID')}</span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-2xl border border-[#D4A574]/30 mb-6">
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-semibold text-gray-700">Total Pembayaran</span>
-                      <span className="text-2xl font-bold bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent">Rp {total.toLocaleString('id-ID')}</span>
-                    </div>
-                  </div>
-
-                    <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full bg-linear-to-r from-[#D4A574] to-[#C17A4F] hover:from-[#C17A4F] hover:to-[#B87333] text-white py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl font-bold text-lg"
-                  >
-                    <span>Proses Checkout</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.button>
-
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <p className="text-xs text-gray-500 text-center mb-3">Metode Pembayaran</p>
-                    <div className="flex justify-center gap-3">
-                      <div className="bg-linear-to-r from-[#D4A574]/10 to-[#D4A574]/5 border border-[#D4A574]/20 px-4 py-2 rounded-lg text-sm font-medium text-[#C17A4F] shadow-sm">
-                        GOPAY
-                      </div>
-                      <div className="bg-linear-to-r from-[#D4A574]/10 to-[#D4A574]/5 border border-[#D4A574]/20 px-4 py-2 rounded-lg text-sm font-medium text-[#C17A4F] shadow-sm">
-                        DANA
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
 
       <motion.div
         id="recommendation-section"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className={`pb-40 transition-all duration-300 ${showOrderModal ? 'blur-sm' : ''}`}
+        className="pb-40"
       >
-        <h2 className="mt-7 mb-4 text-3xl font-bold bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent">Produk Kami</h2>
+        <h2 className="mt-7 mb-4 text-2xl font-bold bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent">Produk Kami</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-5">
           {loading ? (
             <div className="flex justify-center items-center h-64">
@@ -883,12 +760,6 @@ export function Cart() {
         </div>
       </motion.div>
       
-      <ModalProduct
-        product={selectedProduct}
-        isOpen={showProductModal}
-        onClose={() => setShowProductModal(false)}
-        onAddToCart={handleAddToCartFromModal}
-      />
         </div>
       </div>
     </div>

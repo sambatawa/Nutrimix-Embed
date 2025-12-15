@@ -216,13 +216,13 @@ function Pengaturan() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 pt-6 px-6"
       >
-        <h1 className="text-3xl font-bold text-[#6C5F57] mb-2">Pengaturan</h1>
+        <h1 className="text-2xl font-bold text-[#6C5F57] mb-2">Pengaturan</h1>
         <p className="text-[#7d6f66]">Kelola profile dan preferensi akun Anda</p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6">
         <div className="lg:col-span-1">
           <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-[#EDE6DF]/30">
             {tabs.map((tab) => {

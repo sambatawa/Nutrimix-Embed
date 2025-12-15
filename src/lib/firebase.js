@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push, set, get, child, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { getDatabase, ref, push, set, get, update, child, query, orderByChild, equalTo, onValue } from 'firebase/database';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import bcrypt from 'bcryptjs';
@@ -19,7 +19,7 @@ const db = getDatabase(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { app, db, storage, auth, ref, get, query, orderByChild, equalTo, onValue, onAuthStateChanged };
+export { app, db, storage, auth, ref, push, set, get, update, query, orderByChild, equalTo, onValue, onAuthStateChanged };
 
 export const listenToDeviceData = (callback) => {
   const deviceRef = ref(db, 'device/-OgEmMPsbUdxg_k3bnOh');
@@ -454,15 +454,12 @@ export const updateFormula = async (formulaId, formulaData) => {
 
 export const updateUserProfile = async (userEmail, profileData) => {
   try {
-    const sanitizedEmail = email.replace(/[^a-zA-Z0-9]/g, '_');
+    const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '_');
     const userRef = ref(db, `users/${sanitizedEmail}`);
     const snapshot = await get(userRef);
     
     if (snapshot.exists()) {
-      await set(userRef, {
-        ...snapshot.val(),
-        password: hashedPassword
-      });
+      await update(userRef, profileData);
       return true;
     }
     
@@ -470,10 +467,7 @@ export const updateUserProfile = async (userEmail, profileData) => {
     const adminSnapshot = await get(adminRef);
     
     if (adminSnapshot.exists()) {
-      await set(adminRef, {
-        ...adminSnapshot.val(),
-        password: hashedPassword
-      });
+      await update(adminRef, profileData);
       return true;
     }
     
