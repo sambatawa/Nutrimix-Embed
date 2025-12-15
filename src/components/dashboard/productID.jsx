@@ -2,34 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ShoppingBag, 
-  Star, 
-  Truck, 
-  Shield, 
-  ArrowLeft, 
-  Heart, 
-  Share2, 
-  Minus, 
-  Plus,
-  Check,
-  Package,
-  Award,
-  Clock,
-  MapPin
-} from 'lucide-react';
+import { ShoppingBag, Star, Truck, Shield, ArrowLeft, Heart, Share2, Minus, Plus, Check, Package, Award, Clock, MapPin} from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { getProductById, addToCart } from '@/lib/firebase';
 
 export default function ProductID() {
   const params = useParams();
   const router = useRouter();
-  
-  // Fallback user ID from localStorage since we're using localStorage auth
   const getUserId = () => {
-    // Since localStorage is empty, use hardcoded admin ID for now
-    // This is a temporary solution for the admin account
-    console.log('Using hardcoded admin ID for demo purposes');
     return 'inassamarataqia_gmail_com';
   };
   
@@ -99,7 +79,7 @@ export default function ProductID() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4A574]"></div>
       </div>
     );
   }
@@ -109,10 +89,7 @@ export default function ProductID() {
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Produk tidak ditemukan</h2>
-          <button
-            onClick={handleBack}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl transition-all duration-300"
-          >
+          <button onClick={handleBack} className="bg-[#D4A574] hover:bg-[#C17A4F] text-white px-6 py-2 rounded-xl transition-all duration-300">
             Kembali
           </button>
         </div>
@@ -128,10 +105,9 @@ export default function ProductID() {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={handleBack}
-        className="flex items-center space-x-2 bg-[#D4A574] hover:bg-[#C17A4F] text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
+        className="flex items-center space-x-2 bg-[#D4A574] hover:bg-[#C17A4F] text-white px-3 py-3 rounded-full transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span>Kembali</span>
       </motion.button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -171,7 +147,7 @@ export default function ProductID() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedImage(index)}
                 className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                  selectedImage === index ? 'border-blue-600' : 'border-gray-200'
+                  selectedImage === index ? 'border-yellow-600' : 'border-gray-200'
                 }`}
               >
                 <img
@@ -215,17 +191,11 @@ export default function ProductID() {
                 Rp {(product.price * quantity).toLocaleString('id-ID')}
               </span>
               <span className="text-lg text-gray-500">
-                Rp {product.price.toLocaleString('id-ID')} / {product.size}
+                Rp {product.price.toLocaleString('id-ID')} /Barang
               </span>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-              {product.type}
-            </span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">
-              {product.size}
-            </span>
             {product.stock <= 5 && (
               <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
                 Stok Terbatas
@@ -320,21 +290,25 @@ export default function ProductID() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white rounded-xl p-6 shadow-md"
+            className="bg-white rounded-xl mb-5 p-6 shadow-md"
           >
             <h3 className="font-semibold text-gray-900 text-lg mb-4">Informasi Tambahan</h3>
             <div className="space-y-3">
               <div className="flex justify-between py-2 border-b border-gray-100">
-                <span className="text-gray-600">Berat</span>
-                <span className="font-medium">{product.size}</span>
+                <span className="text-gray-600">Dimensi</span>
+                <span className="font-medium">{product.spesifikasi?.split(',')[2]?.split(':')[1]?.trim()}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-100">
-                <span className="text-gray-600">Kategori</span>
-                <span className="font-medium">{product.type}</span>
+                <span className="text-gray-600">Material</span>
+                <span className="font-medium">{product.spesifikasi?.split(',')[3]?.split(':')[1]?.trim()}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-100">
                 <span className="text-gray-600">Stok</span>
-                <span className="font-medium">{product.stock || 50} pcs</span>
+                <span className="font-medium">{product.stock} pcs</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Formula</span>
+                <span className="font-medium">{product.spesifikasi?.split(',')[5]?.split(':')[1]?.trim()}</span>
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-gray-600">Estimasi Pengiriman</span>
