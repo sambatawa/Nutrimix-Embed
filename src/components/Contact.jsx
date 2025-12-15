@@ -179,16 +179,16 @@ export function Contact() {
                 className="group"
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2 relative">
-                  <span className="bg-gradient-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Nama Lengkap</span>
+                  <span className="bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Nama Lengkap</span>
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F]"
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F]"
                   />
                 </label>
                 <div className="relative">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
+                    className="absolute inset-0 bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
                   />
                   <input
                     type="text"
@@ -210,16 +210,16 @@ export function Contact() {
                 className="group"
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2 relative">
-                  <span className="bg-gradient-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Email</span>
+                  <span className="bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Email</span>
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F]"
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F]"
                   />
                 </label>
                 <div className="relative">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
+                    className="absolute inset-0 bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
                   />
                   <input
                     type="email"
@@ -241,16 +241,16 @@ export function Contact() {
                 className="group"
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2 relative">
-                  <span className="bg-gradient-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Kategori</span>
+                  <span className="bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Kategori</span>
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F]"
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F]"
                   />
                 </label>
                 <div className="relative">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
+                    className="absolute inset-0 bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
                   />
                   <div className="relative">
                     <motion.button
@@ -300,17 +300,17 @@ export function Contact() {
                                 }}
                                 className="w-full px-4 py-3 text-left rounded-xl transition-all duration-300 group relative overflow-hidden"
                               >
-                                <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/5 to-[#C17A4F]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute inset-0 bg-linear-to-r from-[#D4A574]/5 to-[#C17A4F]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 <div className="relative flex items-center justify-between">
                                   <div className="flex items-center gap-3">
-                                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F] opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100" />
+                                    <div className="w-2 h-2 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F] opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100" />
                                     <span className="font-medium text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
                                       {category}
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#D4A574]/10 to-[#C17A4F]/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                      <div className="w-3 h-3 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F]" />
+                                    <div className="w-6 h-6 rounded-full bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                      <div className="w-3 h-3 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F]" />
                                     </div>
                                   </div>
                                 </div>
@@ -332,16 +332,16 @@ export function Contact() {
                 className="group"
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2 relative">
-                  <span className="bg-gradient-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Pesan</span>
+                  <span className="bg-linear-to-r from-[#D4A574] to-[#C17A4F] bg-clip-text text-transparent font-semibold">Pesan</span>
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F]"
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-linear-to-r from-[#D4A574] to-[#C17A4F]"
                   />
                 </label>
                 <div className="relative">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
+                    className="absolute inset-0 bg-linear-to-r from-[#D4A574]/10 to-[#C17A4F]/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
                   />
                   <textarea
                     name="message"
@@ -367,9 +367,9 @@ export function Contact() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="relative w-full bg-gradient-to-r from-[#D4A574] to-[#C17A4F] text-white py-4 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group shadow-lg hover:shadow-2xl"
+                className="relative w-full bg-linear-to-r from-[#D4A574] to-[#C17A4F] text-white py-4 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group shadow-lg hover:shadow-2xl"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <motion.div
                   animate={{ rotate: isSubmitting ? 360 : 0 }}
                   transition={{ duration: 1, repeat: isSubmitting ? Infinity : 0, ease: "linear" }}

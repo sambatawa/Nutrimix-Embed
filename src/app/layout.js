@@ -6,13 +6,13 @@ const geistSans = {
 };
 
 const geistMono = {
-  variable: "--font-geist-mono", 
+  variable: "--font-mono", 
   className: "font-mono"
 };
 
 export const metadata = {
   title: "Nutrimix",
-  description: "Nutrimix ALat pakan Lele, Welcome to our Web Bro and Sis",
+  description: "Nutrimix ALat pakan Lele, Welcome to our Web Bro and Sis"
 };
 
 export default function RootLayout({ children }) {

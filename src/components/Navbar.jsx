@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
-import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
+import { Search, User, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navbar() {
@@ -87,22 +87,6 @@ export function Navbar() {
               className="text-gray-600 hover:text-gray-900 transition-all duration-300 p-2 rounded-full hover:bg-gray-100"
             >
               <User className="w-5 h-5" />
-            </motion.button>
-            <motion.button 
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-gray-600 hover:text-gray-900 transition-all duration-300 p-2 rounded-full hover:bg-gray-100 relative"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              <motion.span 
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.5, type: "spring" }}
-                className="absolute -top-1 -right-1 bg-linear-to-r from-[#D4A574] to-[#C17A4F] text-white rounded-full w-5 h-5 flex items-center justify-center shadow-lg" 
-                style={{ fontSize: '0.65rem', fontWeight: '600' }}
-              >
-                2
-              </motion.span>
             </motion.button>
             <motion.button 
               whileHover={{ scale: 1.15 }}

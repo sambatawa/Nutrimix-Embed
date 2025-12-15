@@ -23,7 +23,7 @@ export function Ajakan() {
           transform: 'scale(1.1)'
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#F5F0EB]/90 via-[#F8F4EF]/90 to-[#FAF6F1]/90" />
+      <div className="absolute inset-0 bg-linear-to-br from-[#F5F0EB]/90 via-[#F8F4EF]/90 to-[#FAF6F1]/90" />
       <div className="max-w-[1400px] mx-auto relative">
 
         <motion.div

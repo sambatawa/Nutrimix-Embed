@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { ChevronDown, Check } from "lucide-react";
 
 const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -15,7 +15,8 @@ export default function InformasiSistem({
   onSelect = () => {},
   overallDistribution = null,
 }) {
-  const initial = selected || (formulas.length ? formulas[0] : "");
+  const formulaNames = formulas.map(f => typeof f === 'string' ? f : f.name);
+  const initial = selected || (formulaNames.length ? formulaNames[0] : "");
   const [current, setCurrent] = useState(initial);
 
   useEffect(() => {
@@ -27,25 +28,30 @@ export default function InformasiSistem({
     onSelect(name);
   };
 
-  /* ================================
-     1) LINE CHART (high contrast)
-  ================================= */
   const lineSeries = useMemo(() => {
-    const seed = current.split("").reduce((s, ch) => s + ch.charCodeAt(0), 0);
-    const values = Array.from({ length: 24 }, (_, h) => {
-      const base = Math.floor(Math.abs(Math.sin((h + seed / 10) * 0.7)) * 20) + 2;
-      const mod =
-        h >= 7 && h <= 9
-          ? 8
-          : h >= 12 && h <= 14
-          ? 12
-          : h >= 18 && h <= 20
-          ? 10
-          : 0;
-      return base + Math.floor(mod * Math.abs(Math.cos((seed + h) / 10)));
+    const colors = ["#6C5F57", "#A58F85", "#CBBFB4", "#D8CDC3", "#E7DFD7", "#D4A574", "#FAF6F1"];
+    
+    return formulaNames.map((formulaName, idx) => {
+      const seed = formulaName.split("").reduce((s, ch) => s + ch.charCodeAt(0), 0);
+      const values = Array.from({ length: 24 }, (_, h) => {
+        const base = Math.floor(Math.abs(Math.sin((h + seed / 10) * 0.7)) * 20) + 2;
+        const mod =
+          h >= 7 && h <= 9
+            ? 8
+            : h >= 12 && h <= 14
+            ? 12
+            : h >= 18 && h <= 20
+            ? 10
+            : 0;
+        return base + Math.floor(mod * Math.abs(Math.cos((seed + h) / 10)));
+      });
+      return { 
+        name: formulaName, 
+        data: values,
+        color: colors[idx % colors.length]
+      };
     });
-    return [{ name: current || "Formula", data: values }];
-  }, [current]);
+  }, [formulaNames]);
 
   const lineOptions = useMemo(
     () => ({
@@ -56,18 +62,16 @@ export default function InformasiSistem({
       },
       stroke: {
         curve: "smooth",
-        width: 4, // thicker
-        colors: ["#000000"], // high contrast blue
+        width: 3,
       },
       markers: {
-        size: 5,
-        colors: ["#000000"],
+        size: 4,
         strokeWidth: 2,
       },
       xaxis: {
         categories: Array.from({ length: 24 }, (_, i) => `${i}`),
         labels: { style: { fontSize: "12px", colors: "#6C5F57" } },
-        title: { text: "Hour", style: { fontSize: "13px", color: "#6C5F57" } },
+        title: { text: "Jam", style: { fontSize: "13px", color: "#6C5F57" } },
       },
       yaxis: {
         labels: { style: { fontSize: "12px", colors: "#6C5F57" } },
@@ -76,53 +80,48 @@ export default function InformasiSistem({
         borderColor: "#D8D0C8",
         strokeDashArray: 4,
       },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          opacityFrom: 0.50,
-          opacityTo: 0.05,
-        },
-      },
       tooltip: { theme: "light" },
-      legend: { show: false },
+      legend: { 
+        show: true, 
+        position: "bottom",
+        fontSize: "11px",
+        labels: { colors: "#6C5F57" }
+      },
+      colors: ["#6C5F57", "#A58F85", "#CBBFB4", "#D8CDC3", "#E7DFD7", "#D4A574", "#FAF6F1"]
     }),
     []
   );
 
-  /* ================================
-     2) DOUGHNUT CHART (more contrast & bigger)
-  ================================= */
   const doughnutSeries = useMemo(() => {
     if (overallDistribution) return Object.values(overallDistribution);
     return formulas.map((f, idx) => 20 + (idx % 3) * 5);
   }, [overallDistribution, formulas]);
 
   const doughnutLabels = useMemo(
-    () => (overallDistribution ? Object.keys(overallDistribution) : formulas),
-    [overallDistribution, formulas]
+    () => (overallDistribution ? Object.keys(overallDistribution) : formulaNames),
+    [overallDistribution, formulaNames]
   );
 
   const doughnutOptions = useMemo(
     () => ({
       chart: { toolbar: { show: false } },
       labels: doughnutLabels,
-      legend: { position: "bottom", fontSize: "13px" },
+      legend: { show: false },
 
       plotOptions: {
         pie: {
-          donut: { size: "72%" }, // bigger donut
+          donut: { size: "72%" },
         },
       },
 
-      // HIGH CONTRAST COLORS
       colors: [
-        "#4F46E5", // indigo
-        "#F59E0B", // yellow
-        "#EF4444", // red
-        "#10B981", // green
-        "#EC4899", // pink
-        "#6366F1", // purple
+        "#6C5F57",
+        "#A58F85",
+        "#CBBFB4",
+        "#D8CDC3",
+        "#E7DFD7",
+        "#D4A574",
+        "#FAF6F1"
       ],
 
       tooltip: { theme: "light" },
@@ -130,9 +129,6 @@ export default function InformasiSistem({
     [doughnutLabels]
   );
 
-  /* ================================
-     3) RADAR CHART (stronger contrast)
-  ================================= */
   const radarSeries = useMemo(() => {
     const nutrients = formulaData[current] || { protein: 0, fat: 0, fiber: 0 };
     return [
@@ -157,8 +153,8 @@ export default function InformasiSistem({
 
       stroke: {
         show: true,
-        width: 3, // thicker
-        colors: ["#059669"], // high contrast green
+        width: 3,
+        colors: ["#059669"],
       },
 
       fill: { opacity: 0.25, colors: ["#10B981"] },
@@ -172,36 +168,38 @@ export default function InformasiSistem({
     []
   );
 
-  /* ================================
-     RENDER
-  ================================= */
   return (
-    <section className="p-4 rounded-2xl bg-white/80 backdrop-blur-md shadow-md border border-[#EDE6DF]">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-[#6C5F57]">Informasi Detail Formula</h3>
+    <section className="p-4 rounded-2xl bg-transparent backdrop-blur-sm shadow-sm border border-white/20 relative overflow-hidden">
 
-        {/* Dropdown */}
-        <div className="relative inline-flex items-center">
-          <select
-            value={current}
-            onChange={(e) => handleChange(e.target.value)}
-            className="appearance-none bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm shadow-sm pr-8"
-          >
-            {formulas.map((f) => (
-              <option value={f} key={f}>
-                {f}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-2 pointer-events-none" size={16} />
+      <div className="mb-4 relative z-10">
+        <div className="p-4 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 transition-all duration-300">
+          <h2 className="text-lg font-semibold text-[#6C5F57] mb-2">Informasi {current}</h2>
+    
+          <p className="text-sm text-[#7d6f66]">
+            Formula {current} dirancang dengan kandungan nutrisi optimal untuk mendukung pertumbuhan dan kesehatan ikan. Komposisi seimbang antara protein, lemak, dan serat memastikan hasil ternak yang maksimal.
+          </p>
+    
+          <div className="mt-4 text-sm grid grid-cols-3 gap-4">
+            <div className="text-center p-2 bg-white/30 rounded-lg">
+              <p className="font-semibold text-[#6C5F57]">Protein</p>
+              <p className="text-[#7d6f66">{formulaData[current]?.protein || 0}g</p>
+            </div>
+            <div className="text-center p-2 bg-white/30 rounded-lg">
+              <p className="font-semibold text-[#6C5F57]">Lemak</p>
+              <p className="text-[#7d6f66">{formulaData[current]?.fat || 0}g</p>
+            </div>
+            <div className="text-center p-2 bg-white/30 rounded-lg">
+              <p className="font-semibold text-[#6C5F57]">Serat</p>
+              <p className="text-[#7d6f66">{formulaData[current]?.fiber || 0}g</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Layout */}
-      <div className="flex flex-col lg:flex-row gap-4">
-        {/* Left: Line Chart */}
-        <div className="w-full lg:w-[70%] bg-white/0 rounded-lg p-2">
-          <div className="h-72 lg:h-[360px]"> {/* bigger */}
+      <div className="flex flex-col lg:flex-row gap-4 relative z-10">
+        <div className="w-full lg:w-[70%] rounded-lg p-2 bg-white/20 backdrop-blur-md shadow-lg border border-white/20 hover:bg-white/30 transition-all duration-300 hover:shadow-xl hover:border-white/30">
+          <h3 className="text-lg font-semibold text-[#6C5F57] mb-2">Grafik Produksi per Jam</h3>
+          <div className="h-72 lg:h-[360px]">
             <Chart
               options={lineOptions}
               series={lineSeries}
@@ -209,16 +207,12 @@ export default function InformasiSistem({
               height={"100%"}
             />
           </div>
-          <p className="text-xs text-[#6C5F57] mt-2">
-            Clicks per hour (last 24 hours) — {current}
-          </p>
         </div>
 
-        {/* Right column */}
         <div className="w-full lg:w-[30%] flex flex-col gap-4">
-          {/* Doughnut */}
-          <div className="bg-white rounded-lg p-3 shadow-sm">
-            <div className="h-48"> {/* bigger */}
+          <div className="rounded-lg p-3 bg-white/20 backdrop-blur-md shadow-lg border border-white/20 hover:bg-white/30 transition-all duration-300 hover:shadow-xl hover:border-white/30">
+            <h3 className="text-lg font-semibold text-[#6C5F57] mb-2">Distribusi Formula</h3>
+            <div className="h-48">
               <Chart
                 options={doughnutOptions}
                 series={doughnutSeries}
@@ -226,14 +220,13 @@ export default function InformasiSistem({
                 height={"100%"}
               />
             </div>
-            <p className="text-xs text-[#6C5F57] mt-2">
-              Overall clicks distribution
-            </p>
           </div>
 
-          {/* Radar */}
-          <div className="bg-white rounded-lg p-3 shadow-sm">
-            <div className="h-48"> {/* bigger */}
+          <div className="rounded-lg p-3 bg-white/20 backdrop-blur-md shadow-lg border border-white/20 hover:bg-white/30 transition-all duration-300 hover:shadow-xl hover:border-white/30">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg font-semibold text-[#6C5F57]">Analisis Formula</h3>
+            </div>
+            <div className="h-40">
               <Chart
                 options={radarOptions}
                 series={radarSeries}

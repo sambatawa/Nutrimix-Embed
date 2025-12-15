@@ -21,15 +21,35 @@ export function LoginPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const [error, setError] = useState('');
+  const router = useRouter();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
+    
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Login:', { email, password });
-      alert('Login berhasil!');
-      window.location.href = '/register';
-    }, 2000);
+      
+      if (email && password.length >= 6) {
+        console.log('Login successful:', { email });
+        
+        document.cookie = 'isAuthenticated=true; path=/; max-age=86400';
+        document.cookie = `userEmail=${encodeURIComponent(email)}; path=/; max-age=86400`;
+        
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userEmail', email);
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect');
+        
+        router.push(redirectUrl || '/dashboard');
+      } else {
+        setError('Email atau kata sandi salah. Silakan coba lagi.');
+        console.log('Login failed:', { email, password });
+      }
+    }, 1500);
   };
 
 

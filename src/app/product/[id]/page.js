@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '@/components/dashboard/layout';
-import { Cart as CartComponent } from '@/components/Cart';
+import ProductID from '@/components/dashboard/productID';
 
-export default function Cart() {
+export default function ProductPage() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   
@@ -39,7 +39,7 @@ export default function Cart() {
   
   return (
     <DashboardLayout>
-      <CartComponent />
+      <ProductID />
     </DashboardLayout>
   );
 }
