@@ -18,7 +18,7 @@ export function Ajakan() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=80)',
+          backgroundImage: 'url(/5.JPG)',
           filter: 'blur(8px)',
           transform: 'scale(1.1)'
         }}
